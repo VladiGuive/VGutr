@@ -1,0 +1,76 @@
+# VGutr will scan recursively all the .toml files from its path.
+# If you want a .toml file to not be loaded to VGutr set active to false.
+# If you want VGutr to load your .toml file, set active to true
+# This was made this way to make easier to have a clean config. I.E.:
+# configs/
+# ├── discord_config.toml
+# ├── web_dashboard.toml
+# ├── proyect/
+# │   ├── endpoints.toml
+# │   ├── servers.toml
+# │   └── new_server.toml
+# └── my_personal_endpoints.yaml 
+
+active = false
+
+
+# This config is global to all monitors in this file, but can be overwriten.
+[monitor]
+# Notify the user via integration rather than just displaying status in board.
+notify = false
+# The integration used to notify from events
+integration = 'integration.discord'
+# Seconds between every scan.
+scan_interval = 300
+# The prefix is used to sort the services, is the filename if not assigned.
+prefix = 'my_services'
+
+# This config is global to all endpoints in this file, but can be overwriten
+[monitor.endpoints]
+force_https = true
+notify = true
+scan_interval = 60
+
+[monitor.endpoints.google]
+url = 'https://google.com'
+scan_interval = 120
+prefix = 'third_party'
+
+[monitor.endpoints.my_app]
+url = 'http://localhost:3000'
+force_https = false
+auth = ['user', 'pass']
+name = 'localhost'
+
+[monitor.servers]
+notify = true
+scan_interval = 600
+mem_threshold_alert = 90
+cpu_threshold_alert = 90
+disk_threshold_alert = 75
+prefix = 'my_servers'
+
+[monitor.servers.my_server]
+use_password_authentication = true
+host = '123.456.789.0'
+port = 22
+user = 'user'
+password = 'pass'
+
+[monitor.servers.other_server]
+use_password_authentication = false
+host = 'server.myapp.com'
+port = 2342
+user = 'user'
+pkey = '/home/user/.shh/key'
+name = 'production'
+
+
+
+
+[integration]
+
+[integration.discord]
+token = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+server = 'https://discord.gg/gggggggg'
+channel = 'monitoring'
